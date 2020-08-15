@@ -40,5 +40,25 @@ ggplot(line_graph_data, mapping = aes(x= date, y =total_cases_per_million, line_
        x='Date',
        y='LOG')
 
+# Plot 2
+# install mapping packages and data from Natural Earth 
+library("rnaturalearth")
+library("rnaturalearthdata")
+library('rgeos')
+library('plotly')
+
+#trim data down to May 8 only (all countries)
+may8_data <- filter(trim_data, date == "2020-05-08")
+
+#create 
+fig <- plot_ly(may8_data, type='choropleth', 
+               locations = may8_data$iso_code, 
+               z=may8_data$total_cases_per_million, 
+               text=may8_data$location, colorscale="D3")
+fig <- fig %>%
+  colorbar(title='Total Cases per Million')
+
+fig
+
 
 
